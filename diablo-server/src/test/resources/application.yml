@@ -1,0 +1,30 @@
+### Configuration ###
+
+
+server:
+  port: 12346
+  address: 127.0.0.1
+
+spring:
+
+  autoconfigure:
+    exclude: me.hao0.diablo.server.api.TowerIndexes
+
+  redis:
+      host: localhost
+      port: 6379
+
+  main:
+    web-environment: false
+
+
+
+### Diablo Configuration ###
+diablo:
+
+  # the inverval for checking server status
+  serverCheckInterval: 10
+
+  # enable or disable client auth
+  # client must config the appKey if enable client_auth
+  clientAuth: false

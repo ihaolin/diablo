@@ -1,0 +1,37 @@
+########### Spring Boot Configuration Start ###########
+
+server:
+  # the server port
+  address: 127.0.0.1
+  port: 12345
+
+spring:
+  # redis datasource
+  redis:
+    host: localhost
+    port: 6379
+
+logging:
+  # logback file location
+  config: classpath:logback.xml
+
+########### Spring Boot Configuration End ###########
+
+
+########### Diablo Configuration Start ###########
+diablo:
+
+  # diablo tower user, default is admin
+  user: admin
+
+  # diablo tower password, default is admin
+  pass: 123456
+
+  # the inverval for checking server's status, it's useful when one server crashed, default is 5s
+  serverCheckInterval: 5
+
+  # enable or disable client api auth, default is true
+  # client must config the appKey if enable client_auth
+  clientAuth: false
+
+########### Diablo Configuration End ###########
