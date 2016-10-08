@@ -9,7 +9,7 @@
 
 + **轻量级**: 没有复杂的技术和第三方依赖;
 
-+ **可靠存储**: 使用**Redis**作为存储，建议时间**Redis Cluster**，**Redis Master-Slave** 或者 **Redis Proxy Middleware**等技术保证存储的可靠性;
++ **可靠存储**: 使用**Redis**作为存储，建议使用**Redis Cluster**，**Redis Master-Slave** 或者 **Redis Proxy Middleware**等技术保证存储的可靠性;
 
 + **对等的Server节点**: Server节点的对等性，保证即便某些Server不可用，集群仍能工作;
 
