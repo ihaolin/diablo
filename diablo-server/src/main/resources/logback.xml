@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_HOME" value="./logs" />
+    <property name="LOG_HOME" value="${diablo.logPath}" />
 
     <!-- console -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">

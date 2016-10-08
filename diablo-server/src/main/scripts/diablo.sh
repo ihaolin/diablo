@@ -6,8 +6,6 @@ DIABLO_HOME=$BASEDIR/..
 
 LIB_HOME=$DIABLO_HOME/lib
 
-LOG_HOME=$RULE_HOME/logs
-
 CONF_FILE=$DIABLO_HOME/conf/diablo.conf
 . $CONF_FILE
 
@@ -16,9 +14,9 @@ JAR_FILE=$LIB_HOME/diablo-server.jar
 PID_FILE=$DIABLO_HOME/diablo.pid
 
 # JAVA_OPTS
-JAVA_OPTS="-server -Duser.dir=$BASEDIR"
+JAVA_OPTS="-server -Duser.dir=$BASEDIR -Ddiablo.logPath=$LOG_PATH"
 JAVA_OPTS="${JAVA_OPTS} $JAVA_HEAP_OPTS"
-JAVA_OPTS="${JAVA_OPTS} -XX:+UseConcMarkSweepGC -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -XX:HeapDumpPath=$LOG_HOME -Xloggc:$LOG_HOME/gc.log"
+JAVA_OPTS="${JAVA_OPTS} -XX:+UseConcMarkSweepGC -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -XX:HeapDumpPath=$LOG_PATH -Xloggc:$LOG_PATH/gc.log"
 
 # CONFIG_OPTS
 CONFIG_OPTS="--server.address=$BIND_ADDR --server.port=$LISTEN_PORT"
