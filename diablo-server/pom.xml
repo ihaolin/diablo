@@ -73,7 +73,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <finalName>diablo-server</finalName>
+                    <finalName>diablo-server-${project.version}</finalName>
                     <descriptors>
                         <descriptor>src/assembly/assemble.xml</descriptor>
                     </descriptors>
