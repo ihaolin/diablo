@@ -190,7 +190,7 @@ A Lightweight Persistent Configuration Service
 
 	+ Paypal:
 
-		[Buy me a cup of coffee](paypal.me/haolinh0).
+		<a href="http://paypal.me/haolinh0" target="_blank">Buy me a cup of coffee</a>.
 		
 	+ Alipay:
 		
