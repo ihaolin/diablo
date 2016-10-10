@@ -1,4 +1,6 @@
-<center>![logo.jpg](logo.jpg)</center>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ihaolin/diablo/master/logo.jpg">
+</p>
 
 轻量的配置管理组件
 ---
