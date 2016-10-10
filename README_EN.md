@@ -5,7 +5,7 @@ A Lightweight Persistent Configuration Service
 
 [中文wiki](README.md).
 
-<a href="http://diablo.hao0.me" target="_blank">Online Demo</a>。
+<a href="http://diablo.hao0.me" target="_blank">Online Demo</a>: User/Password(admin/admin123).
 
 ## Features
 

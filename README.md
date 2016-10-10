@@ -1,11 +1,11 @@
 <center>![logo.jpg](logo.jpg)</center>
 
-轻量的持久化配置服务
+轻量的配置管理组件
 ---
 
 [English wiki](README_EN.md)。
 
-<a href="http://diablo.hao0.me" target="_blank">在线Demo</a>。
+<a href="http://diablo.hao0.me" target="_blank">在线Demo</a>: 用户名/密码(admin/admin123).
 
 ## 一些特性
 
