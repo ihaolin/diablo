@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/ihaolin/diablo/master/logo.jpg">
 </p>
 
-轻量的配置管理组件
+轻量的分布式配置管理平台
 ---
 
 [English wiki](README_EN.md)。
@@ -23,6 +23,9 @@
 
 + ...
 
+## Diablo架构
+
+![](diablo-arch.png)
 
 ## Quick start
 

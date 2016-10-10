@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/ihaolin/diablo/master/logo.jpg">
 </p>
 
-A Lightweight Persistent Configuration Service
+A Lightweight Distributed Configuration Management Platform
 ---
 
 [中文wiki](README.md).
@@ -23,6 +23,10 @@ A Lightweight Persistent Configuration Service
 **Diablo Tower**;
 
 + ...
+
+## Diablo Architecture
+
+![](diablo-arch.png)
 
 ## Quick start
 
