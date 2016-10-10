@@ -32,7 +32,7 @@ class DiabloAgent {
     /**
      * The client version
      */
-    private static final String CLIENT_VERSION = "1.0.0";
+    private static final String CLIENT_VERSION = "1.0.2";
 
     private AbstractDiabloClient client;
 

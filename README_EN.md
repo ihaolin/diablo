@@ -5,6 +5,8 @@ A Lightweight Persistent Configuration Service
 
 [中文wiki](README.md).
 
+<a href="http://diablo.hao0.me" target="_blank">Online Demo</a>。
+
 ## Features
 
 + **Lightweight**: these aren't complex techs and third dependencies;

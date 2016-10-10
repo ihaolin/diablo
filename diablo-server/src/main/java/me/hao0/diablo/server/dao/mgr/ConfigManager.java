@@ -23,11 +23,11 @@ public class ConfigManager {
      */
     public void delete(Config config){
 
-        // delete the config index
-        configDao.unIndex(config);
-
         // unbind app's config id
         configDao.unBindApp(config);
+
+        // delete the config index
+        configDao.unIndex(config);
 
         // delete the config
         configDao.delete(config.getId());

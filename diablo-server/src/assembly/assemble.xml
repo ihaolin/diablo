@@ -4,7 +4,7 @@
     <id>${project.artifactId}-assembly-${project.version}</id>
 
     <!-- basedir -->
-    <baseDirectory>diablo</baseDirectory>
+    <baseDirectory>diablo-server-${project.version}</baseDirectory>
 
     <!-- don't need the file's base dirs -->
     <!--<includeBaseDirectory>false</includeBaseDirectory>-->

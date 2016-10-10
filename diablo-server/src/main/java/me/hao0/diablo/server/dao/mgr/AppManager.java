@@ -28,6 +28,12 @@ public class AppManager {
      */
     public void delete(App app){
 
+        // delete the app index
+        appDao.unIndex(app);
+
+        // delete the app
+        appDao.delete(app.getId());
+
         // delete all configs of the app
         configManager.deleteByAppId(app.getId());
 
@@ -36,12 +42,6 @@ public class AppManager {
 
         // unbind app's all config ids
         configDao.deleteBindOfApp(app.getId());
-
-        // delete the app index
-        appDao.unIndex(app);
-
-        // delete the app
-        appDao.delete(app.getId());
     }
 
     public void save(App app) {

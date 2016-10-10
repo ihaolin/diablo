@@ -5,6 +5,8 @@
 
 [English wiki](README_EN.md)。
 
+<a href="http://diablo.hao0.me" target="_blank">在线Demo</a>。
+
 ## 一些特性
 
 + **轻量级**: 没有复杂的技术和第三方依赖;
@@ -18,6 +20,7 @@
 + **简单的UI**: diablo内嵌了一个简单易用的web界面，叫做**Diablo Tower**;
 
 + ...
+
 
 ## Quick start
 
