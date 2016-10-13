@@ -1,5 +1,6 @@
 package me.hao0.diablo.client;
 
+import me.hao0.diablo.client.listener.ConfigListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,17 @@ public class SimpleDiabloClientTests {
         client.setAppName("myapp");
         client.setAppKey("123456x");
         client.setServers("192.168.0.102:12345,127.0.0.1:12345");
+        client.addListener(new ConfigListener<String>() {
+            @Override
+            public String name() {
+                return "test_config1";
+            }
+
+            @Override
+            public void onUpdate(String newValue) {
+                System.out.println("test_config1 has updated to " + newValue);
+            }
+        });
         client.start();
     }
 

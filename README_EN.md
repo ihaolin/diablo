@@ -126,6 +126,20 @@ A Lightweight Distributed Configuration Management Platform
        client.setAppName("myapp");
        client.setAppKey("123456");
        client.setServers("127.0.0.1:2143,127.0.0.1:2144");
+       // You can add some config listener
+       client.addListener(new ConfigListener<String>() {
+            @Override
+            public String name() {
+                // config name
+                return "test_config1";
+            }
+
+            @Override
+            public void onUpdate(String newValue) {
+                // trigger this method after the local config updated
+                System.out.println("test_config1 has updated to " + newValue);
+            }
+        });
        client.start();
        
        // get the config's latest value
@@ -157,6 +171,22 @@ A Lightweight Distributed Configuration Management Platform
 			<property name="appName" value="myapp" />
 			<property name="appKey" value="123456" />
 			<property name="servers" value="127.0.0.1:2143,127.0.0.1:2144" />
+			<!-- optional configuration -->
+			<property name="listeners">
+				<list>
+					<ref bean="activityNoListener" />
+					<ref bean="timeInfoListener" />
+					<ref bean="timeInfosListener" />
+					<ref bean="timeInfoMapListener" />
+				</list>
+			</property>
+			
+			<!-- Some config listeners -->
+			<bean id="activityNoListener" class="me.hao0.diablo.client.listener.ActivityNoListener" />
+			<bean id="timeInfoListener" class="me.hao0.diablo.client.listener.TimeInfoListener" />
+			<bean id="timeInfosListener" class="me.hao0.diablo.client.listener.TimeInfosListener" />
+			<bean id="timeInfoMapListener" class="me.hao0.diablo.client.listener.TimeInfoMapListener" />
+			
 		</bean>
 		```
 	

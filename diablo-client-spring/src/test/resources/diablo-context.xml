@@ -16,6 +16,20 @@
 		<property name="appName" value="myapp" />
 		<property name="appKey" value="123456x" />
 		<property name="servers" value="127.0.0.1:12345,127.0.0.1:2143" />
+		<property name="listeners">
+			<list>
+				<ref bean="activityNoListener" />
+				<ref bean="timeInfoListener" />
+				<ref bean="timeInfosListener" />
+				<ref bean="timeInfoMapListener" />
+			</list>
+		</property>
 	</bean>
+
+	<!-- some config listeners -->
+	<bean id="activityNoListener" class="me.hao0.diablo.client.listener.ActivityNoListener" />
+	<bean id="timeInfoListener" class="me.hao0.diablo.client.listener.TimeInfoListener" />
+	<bean id="timeInfosListener" class="me.hao0.diablo.client.listener.TimeInfosListener" />
+	<bean id="timeInfoMapListener" class="me.hao0.diablo.client.listener.TimeInfoMapListener" />
 
 </beans>

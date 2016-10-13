@@ -1,4 +1,4 @@
-package me.hao0.diablo.client.converter;
+package me.hao0.diablo.common.convert;
 
 import com.google.common.base.Converter;
 import me.hao0.diablo.common.util.JsonUtil;

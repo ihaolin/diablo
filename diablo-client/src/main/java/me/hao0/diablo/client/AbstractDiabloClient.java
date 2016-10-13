@@ -1,7 +1,10 @@
 package me.hao0.diablo.client;
 
+import com.google.common.base.Converter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import me.hao0.diablo.client.listener.ConfigListener;
+import me.hao0.diablo.common.convert.Converters;
 import me.hao0.diablo.common.model.ConfigItem;
 import me.hao0.diablo.common.util.CollectionUtil;
 import org.slf4j.Logger;
@@ -44,6 +47,8 @@ abstract class AbstractDiabloClient {
      */
     private final Map<String, String> configMd5s = Maps.newHashMap();
 
+    private Map<String, ConfigListenerWrapper> listeners = Maps.newHashMap();
+
     private volatile boolean inited;
 
     private volatile boolean destoryed;
@@ -82,6 +87,24 @@ abstract class AbstractDiabloClient {
         this.servers = servers;
     }
 
+    public void setListeners(List<ConfigListener> listeners) {
+        if (!CollectionUtil.isEmpty(listeners)){
+            for (ConfigListener listener : listeners){
+                addListener(listener);
+            }
+        }
+    }
+
+    public void addListener(ConfigListener listener){
+        ConfigListenerWrapper listenerWrapper = wrapListener(listener);
+        listeners.put(listener.name(), listenerWrapper);
+    }
+
+    private ConfigListenerWrapper wrapListener(ConfigListener listener) {
+        Converter<String, ?> converter = Converters.determine(listener);
+        return new ConfigListenerWrapper(converter, listener);
+    }
+
     /**
      * Start client for some initialization
      */
@@ -111,7 +134,7 @@ abstract class AbstractDiabloClient {
             return;
         }
 
-        refreshConfigs(pullingConfigItems);
+        refreshConfigs(pullingConfigItems, false);
 
         // start the pulling worker
         worker = new DiabloWorker(this);
@@ -152,7 +175,7 @@ abstract class AbstractDiabloClient {
                 configMd5s.put(item.getName(), item.getMd5());
             }
             // tell subclass to refresh updated configs
-            refreshConfigs(configItems);
+            refreshConfigs(configItems, true);
         }
     }
 
@@ -172,13 +195,39 @@ abstract class AbstractDiabloClient {
         return agent.fetchConfigs(names);
     }
 
-    private void refreshConfigs(final List<ConfigItem> configItems){
-        // update md5
+    /**
+     * Refresh the config items
+     * @param configItems the latest config items
+     * @param notify notify the listeners or not
+     */
+    private void refreshConfigs(final List<ConfigItem> configItems, boolean notify){
+
+        // update config md5
         for (ConfigItem configItem : configItems){
             configMd5s.put(configItem.getName(), configItem.getMd5());
         }
-        // tell subclass
+
+        // tell subclass to update
         onConfigsUpdated(configItems);
+
+        // notify listeners
+        if (notify){
+            notifyListeners(configItems);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void notifyListeners(final List<ConfigItem> configItems) {
+        if (!listeners.isEmpty()){
+            ConfigListenerWrapper wrapper;
+            for (ConfigItem item : configItems){
+                wrapper = listeners.get(item.getName());
+                if (wrapper != null){
+                    wrapper.listener.onUpdate(
+                            wrapper.converter.convert(item.getValue()));
+                }
+            }
+        }
     }
 
     /**
@@ -192,4 +241,16 @@ abstract class AbstractDiabloClient {
      * @param configItems updated configs
      */
     abstract protected void onConfigsUpdated(List<ConfigItem> configItems);
+
+    private class ConfigListenerWrapper {
+
+        Converter converter;
+
+        ConfigListener listener;
+
+        ConfigListenerWrapper(Converter converter, ConfigListener listener){
+            this.converter = converter;
+            this.listener = listener;
+        }
+    }
 }

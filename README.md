@@ -125,6 +125,20 @@
        client.setAppName("myapp");
        client.setAppKey("123456");
        client.setServers("127.0.0.1:2143,127.0.0.1:2144");
+       // 可添加配置监听
+       client.addListener(new ConfigListener<String>() {
+            @Override
+            public String name() {
+                // 配置项名称
+                return "test_config1";
+            }
+
+            @Override
+            public void onUpdate(String newValue) {
+                // 该方法会在本地配置更新后触发
+                System.out.println("test_config1 has updated to " + newValue);
+            }
+        });
        client.start();
        
        // 获取配置项最新的值
@@ -156,7 +170,22 @@
 			<property name="appName" value="myapp" />
 			<property name="appKey" value="123456" />
 			<property name="servers" value="127.0.0.1:2143,127.0.0.1:2144" />
+			<!-- 可选配置 -->
+			<property name="listeners">
+				<list>
+					<ref bean="activityNoListener" />
+					<ref bean="timeInfoListener" />
+					<ref bean="timeInfosListener" />
+					<ref bean="timeInfoMapListener" />
+				</list>
+			</property>
 		</bean>
+		
+		<!-- 可配置一些监听器，会在本地配置更新后触发 -->
+		<bean id="activityNoListener" class="me.hao0.diablo.client.listener.ActivityNoListener" />
+		<bean id="timeInfoListener" class="me.hao0.diablo.client.listener.TimeInfoListener" />
+		<bean id="timeInfosListener" class="me.hao0.diablo.client.listener.TimeInfosListener" />
+		<bean id="timeInfoMapListener" class="me.hao0.diablo.client.listener.TimeInfoMapListener" />
 		```
 	
 	+ 添加**diablo配置Bean**到**spring上下文中**, 如:

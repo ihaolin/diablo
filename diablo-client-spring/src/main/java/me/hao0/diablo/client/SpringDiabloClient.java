@@ -1,23 +1,17 @@
 package me.hao0.diablo.client;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.base.Converter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.common.primitives.*;
 import me.hao0.common.util.Fields;
-import me.hao0.diablo.client.converter.BooleanConverter;
-import me.hao0.diablo.client.converter.JavaTypeConverter;
-import me.hao0.diablo.client.converter.JsonConverter;
+import me.hao0.diablo.common.convert.Converters;
 import me.hao0.diablo.common.model.ConfigItem;
 import me.hao0.diablo.common.util.CollectionUtil;
-import me.hao0.diablo.common.util.JsonUtil;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +62,7 @@ public class SpringDiabloClient extends AbstractDiabloClient implements Initiali
         // resolve fields to ConfigItemBean s
         for (Field configItemField : configItemFields){
             configName = configItemField.getName();
-            configItemBean = new ConfigItemBean(configBean, configItemField, determineConverter(configItemField));
+            configItemBean = new ConfigItemBean(configBean, configItemField, Converters.determine(configItemField));
             configItemBeanSet = configItemBeans.get(configName);
             if (configItemBeanSet == null){
                 configItemBeanSet = Sets.newHashSet();
@@ -76,50 +70,6 @@ public class SpringDiabloClient extends AbstractDiabloClient implements Initiali
             }
             configItemBeanSet.add(configItemBean);
         }
-    }
-
-    /**
-     * Determine the converter with the field type
-     * @param field the field
-     * @return the Converter
-     */
-    private Converter<String, ?> determineConverter(Field field) {
-
-        Class fieldClass = field.getType();
-
-        if (String.class.equals(fieldClass)){
-            return null;
-        } else if (Boolean.class.equals(fieldClass) || boolean.class.equals(fieldClass)){
-            return BooleanConverter.INSTANCE;
-        } else if (Integer.class.equals(fieldClass) || int.class.equals(fieldClass)){
-            return Ints.stringConverter();
-        } else if (Long.class.equals(fieldClass) || long.class.equals(fieldClass)) {
-            return Longs.stringConverter();
-        } else if (Short.class.equals(fieldClass) || short.class.equals(fieldClass)){
-            return Shorts.stringConverter();
-        } else if (Float.class.equals(fieldClass) || float.class.equals(fieldClass)){
-            return Floats.stringConverter();
-        } else if (Double.class.equals(fieldClass) || double.class.equals(fieldClass)){
-            return Doubles.stringConverter();
-        } else if (List.class.equals(fieldClass) || Map.class.equals(fieldClass)){
-            // List or Map
-            JavaType type;
-            ParameterizedType parameterizedType = (ParameterizedType)field.getGenericType();
-            if (List.class.equals(fieldClass)){
-                // List
-                Class<?> listGenericType = (Class<?>)parameterizedType.getActualTypeArguments()[0];
-                type = JsonUtil.INSTANCE.createCollectionType(List.class, listGenericType);
-            } else {
-                // Map
-                Class<?> mapKeyType = (Class<?>)parameterizedType.getActualTypeArguments()[0];
-                Class<?> mapValueType = (Class<?>)parameterizedType.getActualTypeArguments()[1];
-                type = JsonUtil.INSTANCE.createCollectionType(Map.class, mapKeyType, mapValueType);
-            }
-            return new JavaTypeConverter(type);
-        }
-
-        // Common Object
-        return new JsonConverter(fieldClass);
     }
 
     @Override
@@ -135,7 +85,7 @@ public class SpringDiabloClient extends AbstractDiabloClient implements Initiali
                         Fields.put(
                             c.bean,
                             c.configItem,
-                            c.converter == null ? update.getValue() : c.converter.convert(update.getValue())
+                            c.converter.convert(update.getValue())
                         );
                     }
                 }
