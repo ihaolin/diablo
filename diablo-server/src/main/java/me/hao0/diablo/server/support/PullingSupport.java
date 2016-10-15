@@ -149,13 +149,8 @@ public class PullingSupport {
             if (sendUpdatedConfigsIfPossible(client.getAppId(), pullingConfigs, response)){
                 // updated config sent
 
-                // complete async context to tell the container sends response
-                asyncContext.complete();
-
-                // cancel data changed listening
-                if (pullingTimeoutFuture != null){
-                    pullingTimeoutFuture.cancel(false);
-                }
+                // stop pulling
+                stopPulling();
 
             } else {
                 // no updated config sent
@@ -164,13 +159,17 @@ public class PullingSupport {
                 int serverKeepPullingTimeout = getPullingTimeout((HttpServletRequest) asyncContext.getRequest());
                 pullingTimeoutFuture = longPullingScheduler.schedule(new Runnable() {
                     public void run() {
-                        Logs.info("client pulling is timeout.");
                         stopPulling();
                     }
                 }, serverKeepPullingTimeout, TimeUnit.SECONDS);
 
                 // start to listen config updated
                 eventDispatcher.register(this);
+
+                // NOTE: avoid the extreme case that config updated notify before registering self
+                if (sendUpdatedConfigsIfPossible(client.getAppId(), pullingConfigs, response)){
+                    stopPulling();
+                }
             }
         }
 
@@ -203,6 +202,11 @@ public class PullingSupport {
 
             // tell the container to send response
             asyncContext.complete();
+
+            // cancel data changed listening
+            if (pullingTimeoutFuture != null){
+                pullingTimeoutFuture.cancel(false);
+            }
         }
 
         /**
