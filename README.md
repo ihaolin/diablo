@@ -106,7 +106,7 @@
 
 ### 集成diablo client到应用中
 
-+ [SimpleDiabloClient](diablo-client/src/main/java/me/hao0/diablo/client/SimpleDiabloClient)(**编程模式**):
++ [SimpleDiabloClient](diablo-client/src/main/java/me/hao0/diablo/client/SimpleDiabloClient.java)(**编程模式**):
 	
 	+ 添加maven依赖:
 
@@ -151,7 +151,7 @@
 		```
 	+ 具体见[测试用例](diablo-client/src/test/java/me/hao0/diablo/client/SimpleDiabloClientTests.java).
 
-+ [SpringDiabloClient](diablo-client-spring/src/main/java/me/hao0/diablo/client/SpringDiabloClient)(**Spring注入模式**):
++ [SpringDiabloClient](diablo-client-spring/src/main/java/me/hao0/diablo/client/SpringDiabloClient.java)(**Spring注入模式**):
 
 	+ 添加maven依赖:
 
@@ -230,6 +230,6 @@
 	
 	+ 微信:
 	   
-	   <img src="wechat.png" width="200">    
+	    <img src="wechat.png" width="200">    
 	   
 		 

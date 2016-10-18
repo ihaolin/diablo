@@ -107,7 +107,7 @@ A Lightweight Distributed Configuration Management Platform
 
 ### Integrate diablo client with applications
 
-+ [SimpleDiabloClient](diablo-client/src/main/java/me/hao0/diablo/client/SimpleDiabloClient)(**Programming Mode**):
++ [SimpleDiabloClient](diablo-client/src/main/java/me/hao0/diablo/client/SimpleDiabloClient.java)(**Programming Mode**):
 	
 	+ add maven dependency:
 
@@ -152,7 +152,7 @@ A Lightweight Distributed Configuration Management Platform
 		```
 	+ you also see these [test cases](diablo-client/src/test/java/me/hao0/diablo/client/SimpleDiabloClientTests.java).
 
-+ [SpringDiabloClient](diablo-client-spring/src/main/java/me/hao0/diablo/client/SpringDiabloClient)(**Spring Inject Mode**):
++ [SpringDiabloClient](diablo-client-spring/src/main/java/me/hao0/diablo/client/SpringDiabloClient.java)(**Spring Inject Mode**):
 
 	+ add maven dependency:
 
