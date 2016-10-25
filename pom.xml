@@ -13,7 +13,7 @@
 
     <groupId>me.hao0</groupId>
     <artifactId>diablo</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <modules>
         <module>diablo-common</module>
         <module>diablo-server</module>

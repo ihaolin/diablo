@@ -7,18 +7,22 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Lists;
 import me.hao0.common.model.Page;
 import me.hao0.common.util.Strings;
-import me.hao0.common.xml.XmlWriters;
+import me.hao0.diablo.common.util.CollectionUtil;
 import me.hao0.diablo.server.dao.AppDao;
 import me.hao0.diablo.server.dao.mgr.AppManager;
 import me.hao0.diablo.server.model.App;
+import me.hao0.diablo.server.model.Config;
 import me.hao0.diablo.server.model.Response;
 import me.hao0.diablo.server.service.AppService;
+import me.hao0.diablo.server.service.ConfigService;
 import me.hao0.diablo.server.support.Messages;
 import me.hao0.diablo.server.util.Logs;
 import me.hao0.diablo.server.util.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,6 +40,13 @@ public class AppServiceImpl implements AppService {
 
     @Autowired
     private AppManager appManager;
+
+    @Autowired
+    private ConfigService configService;
+
+    private static final ExecutorService APP_INHERITOR = Executors.newSingleThreadExecutor();
+
+    private static final Integer CONFIG_INHERIT_BATCH_SIZE = 100;
 
     /**
      * App cache for 5 mins
@@ -125,6 +136,65 @@ public class AppServiceImpl implements AppService {
             Logs.error("failed to delete the app({}), cause: {}",
                     appName, Throwables.getStackTraceAsString(e));
             return Response.notOk(messages.get("app.delete.failed"));
+        }
+    }
+
+    @Override
+    public Response<Boolean> inheritConfigs(Long srcAppId, Long destAppId) {
+
+        if (srcAppId != null && destAppId != null){
+            APP_INHERITOR.submit(new AppConfigInheritTask(srcAppId, destAppId));
+        }
+
+        return Response.ok(Boolean.TRUE);
+    }
+
+    private class AppConfigInheritTask implements Runnable{
+
+        private Long srcAppId;
+
+        private Long destAppId;
+
+        AppConfigInheritTask(Long srcAppId, Long destAppId){
+            this.srcAppId = srcAppId;
+            this.destAppId = destAppId;
+        }
+
+        @Override
+        public void run() {
+            if (appDao.findById(srcAppId) != null
+                    && appDao.findById(destAppId) != null){
+                Response<Page<Config>> pageResp;
+                List<Config> configs;
+                Response<Long> saveResp;
+                for(Integer pageNo = 1;;pageNo++){
+
+                    pageResp = configService.pagingConfig(srcAppId, null, pageNo, CONFIG_INHERIT_BATCH_SIZE);
+                    if (!pageResp.isSuccess()){
+                        Logs.error("failed to paging config(srcAppId={}, destAppId={}, pageNo={}, pageSize={}) when inherit config, cause: {}",
+                                srcAppId, destAppId, pageNo, CONFIG_INHERIT_BATCH_SIZE, pageResp.getErr());
+                        continue;
+                    }
+
+                    configs = pageResp.getData().getData();
+                    if (CollectionUtil.isEmpty(configs)){
+                        return;
+                    }
+
+                    for (Config config : configs){
+                        saveResp = configService.save(destAppId, config.getName(), config.getValue());
+                        if (!saveResp.isSuccess()){
+                            Logs.error("failed to save config(srcAppId={}, destAppId={}, name={}) when inherit config, cause: {}",
+                                    srcAppId, destAppId, config.getName(), saveResp.getErr());
+                        }
+                    }
+
+                    if (configs.size() < CONFIG_INHERIT_BATCH_SIZE){
+                        // the last page
+                        return;
+                    }
+                }
+            }
         }
     }
 }

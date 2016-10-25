@@ -12,9 +12,6 @@ import me.hao0.diablo.server.util.Logs;
 import me.hao0.diablo.server.util.TowerUris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -66,7 +63,8 @@ public class TowerApis {
     public JsonResponse saveApp(
             @RequestParam("appName") String appName,
             @RequestParam("appKey") String appKey,
-            @RequestParam("appDesc") String appDesc){
+            @RequestParam("appDesc") String appDesc,
+            @RequestParam(value = "inheritAppId" ,defaultValue = "") Long inheritAppId){
 
         App app = new App();
         app.setAppName(appName);
@@ -78,6 +76,8 @@ public class TowerApis {
             Logs.error("failed to save app({}), cause: {}", app, saveResp.getErr());
             return JsonResponse.notOk(saveResp.getErr());
         }
+
+        appService.inheritConfigs(inheritAppId, saveResp.getData());
 
         return JsonResponse.ok(saveResp.getData());
     }

@@ -39,4 +39,12 @@ public interface AppService {
      * @return return true if delete successfully, or false
      */
     Response<Boolean> delete(String appName);
+
+    /**
+     * Inherit the configs from one app (asynchronously)
+     * @param srcAppId the source app id
+     * @param destAppId the dest app id
+     * @return return true if inherit successfully
+     */
+    Response<Boolean> inheritConfigs(Long srcAppId, Long destAppId);
 }
