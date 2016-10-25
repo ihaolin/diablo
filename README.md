@@ -36,7 +36,7 @@
 
 	```bash
 	mvn clean package -DskipTests
-	# package located diablo-server/target/diablo-server.tar.gz
+	# package located diablo-server/target/diablo-server-{version}.tar.gz
 	```
 
 + 解压缩包：
