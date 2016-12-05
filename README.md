@@ -106,6 +106,8 @@
 
 ### 集成diablo client到应用中
 
++ 以下针对<span id="java_client">**Java客户端**</span>，其他客户端可参考[该规范](CLIENT_API.md)。
+
 + [SimpleDiabloClient](diablo-client/src/main/java/me/hao0/diablo/client/SimpleDiabloClient.java)(**编程模式**):
 	
 	+ 添加maven依赖:
