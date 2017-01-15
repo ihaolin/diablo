@@ -115,7 +115,7 @@ A Lightweight Distributed Configuration Management Platform
 		<dependency>
             <groupId>me.hao0</groupId>
             <artifactId>diablo-client</artifactId>
-            <version>${version}</version>
+            <version>1.2.2</version>
     	</dependency>
 		```
 	
@@ -160,7 +160,7 @@ A Lightweight Distributed Configuration Management Platform
 		<dependency>
             <groupId>me.hao0</groupId>
             <artifactId>diablo-client-spring</artifactId>
-            <version>${version}</version>
+            <version>1.2.2</version>
     	</dependency>
 		```
 	
