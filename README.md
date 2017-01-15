@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/ihaolin/diablo/master/logo.jpg">
 </p>
 
-轻量的分布式配置管理平台
+轻量的分布式配置管理平台[![Build Status](https://travis-ci.org/ihaolin/diablo.svg?branch=master)](https://travis-ci.org/ihaolin/diablo)
 ---
 
 [English wiki](README_EN.md)。
