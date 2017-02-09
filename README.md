@@ -43,7 +43,7 @@
 
 	```bash
 	tar zxf diablo-server.tar.gz
-	ll diablo
+	ll diabloh
 	bin		# the execute scripts
 	conf	# conf dir
 	lib		# dependency libs
@@ -222,16 +222,13 @@
 
 + 这样一旦你通过**Diablo Tower**修改了对应配置项时，客户端将收到通知。
 
-## 如何成为好人
+## 有事请烧钱
 
-+ 如果觉得还不错，就请喝咖啡吧：
-
-	+ 支付宝:
++ 支付宝:
 		
-		<img src="alipay.png" width="200">
+	<img src="alipay.png" width="200">
 	
-	+ 微信:
-	   
-	    <img src="wechat.png" width="200">    
-	   
++ 微信:
+
+	<img src="wechat.png" width="200">	   
 		 
