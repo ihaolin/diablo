@@ -116,7 +116,7 @@
 		<dependency>
             <groupId>me.hao0</groupId>
             <artifactId>diablo-client</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.3</version>
     	</dependency>
 		```
 	
