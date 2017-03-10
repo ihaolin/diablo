@@ -1,5 +1,6 @@
 package me.hao0.diablo.server.util;
 
+import com.google.common.base.Objects;
 import org.springframework.data.redis.core.ValueOperations;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -92,6 +93,14 @@ public class SimpleRedisLock {
 
     public void release(){
         if (isHold){
+
+            Object redisLockValue = ops.get(lockKey);
+            if (!Objects.equal(lockValue, redisLockValue)){
+                ops = null;
+                isHold = false;
+                return;
+            }
+
             ops.getOperations().delete(lockKey);
             ops = null;
             isHold = false;

@@ -30,7 +30,7 @@ public class SimpleRedisLockTests {
                 return;
             }
             System.err.println("locked it...");
-            Thread.sleep(40000L);
+            Thread.sleep(30000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
